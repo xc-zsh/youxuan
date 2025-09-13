@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>优选购物 - 您的在线购物平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 头部搜索栏 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-shopping-bag"></i>
+                优选购物
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="搜索商品...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="header-icons">
+                <button class="icon-button">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <button class="icon-button" id="cart-button">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 导航标签 -->
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-target="home">
+                <i class="fas fa-home"></i>
+                <span>主页</span>
+            </div>
+            <div class="nav-tab" data-target="category">
+                <i class="fas fa-list"></i>
+                <span>分类</span>
+            </div>
+            <div class="nav-tab" data-target="cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span>购物车</span>
+            </div>
+            <div class="nav-tab" data-target="profile">
+                <i class="fas fa-user"></i>
+                <span>我的</span>
+            </div>
+        </div>
+
+        <!-- 主页内容 -->
+        <div id="home" class="content-section active">
+            <h2 class="section-title">热门商品</h2>
+            <div class="products-grid" id="products-container">
+                <!-- 商品将通过JS动态加载 -->
+            </div>
+        </div>
+
+        <!-- 分类内容 -->
+        <div id="category" class="content-section">
+            <h2 class="section-title">商品分类</h2>
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>电子产品</h3>
+                    <p>手机、电脑、平板等</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>服装鞋帽</h3>
+                    <p>男装、女装、鞋类等</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>食品生鲜</h3>
+                    <p>水果、蔬菜、零食等</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-couch"></i>
+                    </div>
+                    <h3>家居家装</h3>
+                    <p>家具、家纺、装饰等</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 购物车内容 -->
+        <div id="cart" class="content-section">
+            <h2 class="section-title">购物车</h2>
+            <div class="cart-items" id="cart-items-container">
+                <!-- 购物车商品将通过JS动态加载 -->
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>商品总额</span>
+                    <span id="subtotal">¥0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>运费</span>
+                    <span>¥0.00</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>合计</span>
+                    <span id="total">¥0.00</span>
+                </div>
+                <!-- 修改购物车页面的结算按钮，添加id属性 -->
+                <button class="checkout-btn" id="checkout-btn">去结算</button>
+                
+            </div>
+        </div>
+
+        <!-- 我的页面内容 -->
+        <div id="profile" class="content-section">
+            <div class="profile-section">
+                <img alt="头像" class="profile-avatar" id="user-avatar" src="https://img.tuxiangyan.com/zb_users/upload/2023/02/202302091675904134407256.jpg">
+                <h3 class="profile-name" id="user-name">未登录</h3>
+                <p class="profile-email" id="user-email">请登录以查看个人信息</p>
+                <button class="login-btn" id="login-button">登录/注册</button>
+            </div>
+            
+            <div class="profile-menu">
+                <div class="menu-item">
+                    <i class="fas fa-box"></i>
+                    <span>我的订单</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>收货地址</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-truck"></i>
+                    <span>物流跟踪</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>帮助中心</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商品详情页（默认隐藏） -->
+        <div id="product-detail" class="content-section">
+            <div class="category-detail-header">
+                <button id="back-to-home-from-detail" class="back-button">
+                    <i class="fas fa-arrow-left"></i> 返回主页
+                </button>
+                <h2 class="category-title">商品详情</h2>
+            </div>
+            <div class="product-detail">
+                <img src="" alt="商品图片" class="detail-image" id="detail-image">
+                <div class="detail-info">
+                    <h2 class="detail-title" id="detail-title">商品标题</h2>
+                    <div class="detail-price" id="detail-price">¥0.00</div>
+                    <p class="detail-description" id="detail-description">商品描述加载中...</p>
+                    <div class="product-actions">
+                        <button class="btn btn-outline">收藏</button>
+                        <button class="btn btn-primary" id="add-to-cart-btn">加入购物车</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分类详情页面（默认隐藏） -->
+        <div id="category-detail" class="content-section">
+            <div class="category-detail-header">
+                <button id="back-to-category" class="back-button">
+                    <i class="fas fa-arrow-left"></i> 返回分类
+                </button>
+                <h2 class="category-title" id="current-category">分类详情</h2>
+            </div>
+            <div class="category-info">
+                <div class="category-icon-large" id="category-icon"></div>
+                <p class="category-description" id="category-description">正在加载分类商品...</p>
+            </div>
+            <div class="products-grid" id="category-products-container">
+                <!-- 分类商品将通过JS动态加载 -->
+            </div>
+        </div>
+
+        <!-- 我的订单页面（默认隐藏） -->
+        <div id="my-orders" class="content-section">
+            <h2 class="section-title">我的订单</h2>
+            <div class="order-tabs">
+                <button class="order-tab active" data-status="all">全部订单</button>
+                <button class="order-tab" data-status="pending">待付款</button>
+                <button class="order-tab" data-status="shipped">待发货</button>
+                <button class="order-tab" data-status="delivering">待收货</button>
+                <button class="order-tab" data-status="completed">已完成</button>
+            </div>
+            <div class="orders-list" id="orders-container">
+                <!-- 订单列表将通过JS动态加载 -->
+            </div>
+        </div>
+
+        <!-- 收货地址页面（默认隐藏） -->
+        <div id="address-book" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">收货地址</h2>
+                <button id="add-address-btn" class="add-address-btn">
+                    <i class="fas fa-plus"></i>
+                    添加新地址
+                </button>
+            </div>
+            <div class="address-list" id="addresses-container">
+                <!-- 地址列表将通过JS动态加载 -->
+            </div>
+        </div>
+
+        <!-- 物流跟踪页面（默认隐藏） -->
+        <div id="logistics-tracking" class="content-section">
+            <h2 class="section-title">物流跟踪</h2>
+            <div class="tracking-order-selector">
+                <select id="order-select">
+                    <option value="">选择要跟踪的订单</option>
+                    <!-- 订单选项将通过JS动态加载 -->
+                </select>
+            </div>
+            <div class="tracking-info" id="tracking-info">
+                <!-- 物流信息将通过JS动态加载 -->
+            </div>
+        </div>
+
+        <!-- 帮助中心页面（默认隐藏） -->
+        <div id="help-center" class="content-section">
+            <h2 class="section-title">帮助中心</h2>
+            <div class="help-categories">
+                <button class="help-category active" data-category="orders">订单问题</button>
+                <button class="help-category" data-category="payment">支付问题</button>
+                <button class="help-category" data-category="delivery">配送问题</button>
+                <button class="help-category" data-category="returns">退换货问题</button>
+            </div>
+            <div class="faq-list" id="faq-container">
+                <!-- FAQ列表将通过JS动态加载 -->
+            </div>
+        </div>
+
+        <!-- 设置页面（默认隐藏） -->
+        <div id="settings" class="content-section">
+            <h2 class="section-title">设置</h2>
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span class="setting-label">账户安全</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">通知设置</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">隐私设置</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">关于我们</span>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">检查更新</span>
+                    <span class="setting-value">当前版本 1.0.0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加地址模态框 -->
+        <div class="modal" id="address-modal">
+            <div class="modal-content">
+                <h2 class="modal-title">添加收货地址</h2>
+                <div class="form-group">
+                    <label for="recipient-name">收货人</label>
+                    <input type="text" id="recipient-name" placeholder="请输入收货人姓名">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-phone">手机号码</label>
+                    <input type="tel" id="recipient-phone" placeholder="请输入手机号码">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-province">省份</label>
+                    <input type="text" id="recipient-province" placeholder="请输入省份">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-city">城市</label>
+                    <input type="text" id="recipient-city" placeholder="请输入城市">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-district">区县</label>
+                    <input type="text" id="recipient-district" placeholder="请输入区县">
+                </div>
+                <div class="form-group">
+                    <label for="recipient-address">详细地址</label>
+                    <textarea id="recipient-address" rows="3" placeholder="请输入详细地址"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="set-default-address">
+                        设为默认地址
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" id="cancel-address">取消</button>
+                    <button class="btn btn-primary" id="save-address">保存</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 登录模态框 -->
+        <div class="modal" id="login-modal">
+            <div class="modal-content">
+                <h2 class="modal-title">登录/注册</h2>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" placeholder="请输入邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" placeholder="请输入密码">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" id="close-login">取消</button>
+                    <button class="btn btn-primary" id="submit-login">登录</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
